@@ -15,7 +15,8 @@ class Shipment(models.Model):
         ("CANCELED", "Canceled Shipment"),
         ("LATE", "Late"))
 
-    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default="ORIGIN")
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES,
+                              default="ORIGIN")
     recipient = models.CharField(max_length=30, blank=False, null=False)
     carrier = models.CharField(max_length=15, blank=False, null=False)
     expected_ship_date = models.DateField(blank=False)

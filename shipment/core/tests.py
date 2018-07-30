@@ -1,3 +1,5 @@
 from django.test import TestCase
+from .models import Shipment
 
-# Create your tests here.
+
+class 
