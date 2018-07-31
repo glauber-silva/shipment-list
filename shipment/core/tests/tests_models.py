@@ -2,8 +2,11 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.core.urlresolvers import reverse
+from model_mommy import mommy
+from django.utils.timezone import datetime
+from shipment.core.models import Shipment
 
-from .models import Shipment
+from shipment.core.models import Shipment
 
 
 class ModelTestCase(TestCase):
