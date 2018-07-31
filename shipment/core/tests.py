@@ -1,4 +1,8 @@
 from django.test import TestCase
+from rest_framework.test import APIClient
+from rest_framework import status
+from django.core.urlresolvers import reverse
+
 from .models import Shipment
 
 
@@ -42,3 +46,35 @@ class ModelTestCase(TestCase):
         self.shipment.save()
         new_count = Shipment.objects.count()
         self.assertNotEqual(old_count, new_count)
+
+
+class ViewTestCase(TestCase):
+    """
+    Test suite for the api views.
+    """
+
+    def setUp(self):
+        """
+        Define the test client and other test variables.
+        """
+        self.client = APIClient()
+        self.shipment_data = {
+            "shipment": {
+                "sender" : "Sender Name",
+                "recipient" : "Recipient Name",
+                "carrier" : "Carrier Name",
+                "origin" : "Origin",
+                "origin_address" : "Address",
+                "destination" : "Destination",
+                "destination_address" : "Destination Address",
+                "total_weight": "333",
+                "total_volume" : "333"
+            }
+        }
+        self.response = self.client.post(reverse('create'), self.shipment_data, format="json")
+
+    def test_api_can_create_a_shipment(self):
+        """
+        Test the API has shipment creation capability
+        """
+        self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
