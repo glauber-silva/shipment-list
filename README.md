@@ -1,6 +1,5 @@
 # Shipment API
 
-## P
 A simple REST API to maintain a list of shipments.
 
 For this, we used the Python lang. with the Django framework for the basic models and the Django Rest Framework framework for the construction of the API.
