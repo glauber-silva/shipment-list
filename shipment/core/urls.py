@@ -1,25 +1,21 @@
-from django.conf.urls import include, url
-
-from rest_framework.routers import DefaultRouter
-
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 from .views import ShipmentViewSet
 
-router = DefaultRouter(trailing_slash=False)
-router.register(r'articles', ShipmentViewSet)
 
-list_actions = {
+shipment_list = ShipmentViewSet.as_view({
     'get': 'list',
     'post': 'create'
-}
+})
 
-single_actions = {
+shipment_detail = ShipmentViewSet.as_view({
     'get': 'retrieve',
     'put': 'update',
     'patch': 'partial_update',
     'delete': 'destroy'
-}
+})
 
-urlpatterns = [
-    url(r'^', ShipmentViewSet.as_view(list_actions), name="shipments"),
-    url(r'^(?P<pk>\d+)$', ShipmentViewSet.as_view(single_actions), name="shipments"),
-]
+urlpatterns = format_suffix_patterns([
+    url(r'^shipments/$', shipment_list, name='shipments-list'),
+    url(r'^shipments/(?P<pk>[0-9]+)/$', shipment_detail, name='shipments-detail')
+])

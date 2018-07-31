@@ -16,3 +16,7 @@ class ShipmentSerializer(serializers.ModelSerializer):
                   "origin_address", "destination", "destination_address",
                   "total_weight", "total_volume")
         read_only_fields = ("created_at", "updated_at")
+
+ #   def create(self, validated_data):
+ #       shipment = Shipment.objects.create(**validated_data)
+ #      return shipment

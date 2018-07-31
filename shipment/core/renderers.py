@@ -1,6 +1,5 @@
 import json
 from rest_framework.renderers import JSONRenderer
-from rest_framework.utils.serializer_helpers import ReturnList
 
 
 class CoreJSONRenderer(JSONRenderer):
@@ -15,6 +14,7 @@ class CoreJSONRenderer(JSONRenderer):
                 self.pagination_object_label: data['results'],
                 self.pagination_count_label: data['count']
             })
+
         elif data.get('errors', None) is not None:
             return super(CoreJSONRenderer, self).render(data)
 
@@ -26,4 +26,5 @@ class CoreJSONRenderer(JSONRenderer):
 
 class ShipmentJSONRenderer(CoreJSONRenderer):
     object_label = 'shipment'
-    object_label_plural = 'shipments'
+    pagination_object_label = 'shipments'
+    pagination_count_label = 'shipmentsCount'
