@@ -9,7 +9,9 @@ from .serializers import ShipmentSerializer
 
 
 class ShipmentViewSet(mixins.CreateModelMixin,
-                     viewsets.GenericViewSet):
+                      mixins.ListModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
 
     queryset = Shipment.objects.all()
     # permission_classes = (IsAuthenticatedOrReadOnly,)
