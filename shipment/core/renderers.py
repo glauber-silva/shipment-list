@@ -6,18 +6,19 @@ from rest_framework.utils.serializer_helpers import ReturnList
 class CoreJSONRenderer(JSONRenderer):
     charset = 'utf-8'
     object_label = 'object'
-    object_label_plural = 'objects'
+    pagination_object_label = 'objects'
+    pagination_object_count = 'count'
 
     def render(self, data, media_type=None, renderer_context=None):
-        if isinstance(data, ReturnList):
-            _data = json.loads(super(CoreJSONRenderer, self).render(data).decode('utf-8'))
-            return json.dumps({self.object_label_plural: _data})
+        if data.get('results', None) is not None:
+            return json.dumps({
+                self.pagination_object_label: data['results'],
+                self.pagination_count_label: data['count']
+            })
+        elif data.get('errors', None) is not None:
+            return super(CoreJSONRenderer, self).render(data)
+
         else:
-            errors = data.get('errors', None)
-
-            if errors is not None:
-                return super(CoreJSONRenderer, self).render(data)
-
             return json.dumps({
                 self.object_label: data
             })
