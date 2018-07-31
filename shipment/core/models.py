@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime, timedelta
 
 class Shipment(models.Model):
     """
@@ -17,10 +17,15 @@ class Shipment(models.Model):
 
     status = models.CharField(max_length=30, choices=STATUS_CHOICES,
                               default="ORIGIN")
-    recipient = models.CharField(max_length=30, blank=False, null=False)
-    carrier = models.CharField(max_length=15, blank=False, null=False)
-    expected_ship_date = models.DateField(blank=False)
-    origin = models.CharField(max_length=40, blank=False, null=False)
-    destination = models.CharField(max_length=40, blank=False, null=False)
-    total_weight = models.CharField(max_length=6, blank=False, null=False)
-    total_volume = models.CharField(max_length=6, blank=False, null=False)
+    sender = models.CharField(max_length=30, blank=False, default=None)
+    recipient = models.CharField(max_length=30, blank=False, default=None)
+    carrier = models.CharField(max_length=15, blank=False, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    expected_ship_date = models.DateTimeField(default=datetime.now() + timedelta(days=3))
+    origin = models.CharField(max_length=40, blank=False, default=None)
+    origin_address = models.CharField(max_length=100, blank=False, default=None )
+    destination = models.CharField(max_length=40, blank=False, default=None)
+    destination_address = models.CharField(max_length=100, blank=False, default=None)
+    total_weight = models.CharField(max_length=6,  blank=False, default=None)
+    total_volume = models.CharField(max_length=6,  blank=False, default=None)
