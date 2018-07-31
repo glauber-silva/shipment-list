@@ -1,5 +1,11 @@
 # Shipment API
 
+## P
+A simple REST API to maintain a list of shipments.
+
+For this, we used the Python lang. with the Django framework for the basic models and the Django Rest Framework framework for the construction of the API.
+
+
 ## Installation
 1. Unzip the file "shipment-list". Or you can clone this repository: `git clone git@github.com:glauber-silva/shipment-list.git`.
 2. `cd` into `shipment-list`: `cd shipment-list`.
