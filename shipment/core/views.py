@@ -1,4 +1,5 @@
 from rest_framework import mixins, status, viewsets
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
@@ -41,3 +42,37 @@ class ShipmentViewSet(mixins.CreateModelMixin,
             many=True
         )
         return self.get_paginated_response(serializer.data)
+
+    def retrieve(self, request, pk):
+        serializer_context = {'request': request}
+
+        try:
+            serializer_instance = self.queryset.get(pk=pk)
+        except Shipment.DoesNotExist:
+            raise NotFound("A shipment with this id does not exist")
+
+        serializer = self.serializer_class(
+            serializer_instance, context=serializer_context
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, pk):
+        serializer_context = {'request': request}
+
+        try:
+            serializer_instance = self.queryset.get(pk=pk)
+        except Shipment.DoesNotExist:
+            raise NotFound('A shipment with this id does not exist.')
+
+        serializer_data = request.data.get('shipment', {})
+
+        serializer = self.serializer_class(
+            serializer_instance,
+            context=serializer_context,
+            data=serializer_data,
+            partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
