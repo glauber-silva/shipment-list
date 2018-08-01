@@ -25,6 +25,7 @@ If pyenv is still not working, mail to [Glauber](mailto:glauber.lucio.silva@gmai
 1. While still in the same directory: `pip install -r requirements.txt` 
 2. After all the dependencies installed and the terminal becomes available again: `python manage.py migrate`
 3. The database will be initialized. After migrations terminate. We will create a superuser: `python manage.py createsuperuser`
+4. Now let's start the server : `python manage.py runserver`
 
 After these steps the application is ready to use. Below there is a basic documentation for use.
 
